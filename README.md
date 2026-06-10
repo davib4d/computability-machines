@@ -38,3 +38,13 @@ $ python implementacoes/mt_multifita.py
 
 Para executar o Validador de Sintaxe (Automato de Pilha):
 $ python implementacoes/pda_validador.py
+
+---
+
+## Referencias Bibliograficas
+
+- DIVERIO, Tiaraju Asmuz; MENEZES, Paulo Blauth. Teoria da Computacao: Maquinas Universais e Computabilidade. 3. ed. Porto Alegre: Bookman, 2011. [cite: 125]
+
+- MENEZES, Paulo Blauth. Linguagens Formais e Automatos. 6. ed. Porto Alegre: Bookman, 2011. [cite: 126]
+
+- Slides da disciplina sobre Maquina de Turing, maquinas universais, modificacoes da Maquina de Turing, Maquina de Post, solucionabilidade e lambda-Calculo. [cite: 127]
