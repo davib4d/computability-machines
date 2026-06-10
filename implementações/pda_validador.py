@@ -17,16 +17,16 @@ class AutomatoDePilha:
             estado_anterior = self.estado_atual
             acao = ""
             
-            #'BEGIN' (q0 -> q1 -> q2 -> q3 -> q4 -> q5)
-            if self.estado_atual == 'q0' and char == 'B':
+            #usando a palavra RAIOS (q0 -> q1 -> q2 -> q3 -> q4 -> q5)
+            if self.estado_atual == 'q0' and char == 'R':
                 self.estado_atual = 'q1'; acao = "Avança"
-            elif self.estado_atual == 'q1' and char == 'E':
+            elif self.estado_atual == 'q1' and char == 'A':
                 self.estado_atual = 'q2'; acao = "Avança"
-            elif self.estado_atual == 'q2' and char == 'G':
+            elif self.estado_atual == 'q2' and char == 'I':
                 self.estado_atual = 'q3'; acao = "Avança"
-            elif self.estado_atual == 'q3' and char == 'I':
+            elif self.estado_atual == 'q3' and char == 'O':
                 self.estado_atual = 'q4'; acao = "Avança"
-            elif self.estado_atual == 'q4' and char == 'N':
+            elif self.estado_atual == 'q4' and char == 'S':
                 self.estado_atual = 'q5'; acao = "Avança para Miolo"
                 
             #(q5) empilha e desempilha
@@ -50,7 +50,7 @@ class AutomatoDePilha:
                 else:
                     self.estado_atual = 'q_reject'; acao = "Caractere Inválido"
 
-            # Transições do Sufixo 'ND' (q6 -> q7 -> q8)
+            # transições do 'ND' (q6 -> q7 -> q8)
             elif self.estado_atual == 'q6' and char == 'N':
                 self.estado_atual = 'q7'; acao = "Avança"
             elif self.estado_atual == 'q7' and char == 'D':
@@ -69,17 +69,17 @@ class AutomatoDePilha:
         #(q8 para q_accept se a pilha estiver vazia até o fundo)
         if self.estado_atual == 'q8' and self.pilha == ['$']:
             self.estado_atual = 'q_accept'
-            print("\n[RESULTADO] Cadeia ACEITA: Sintaxe íntegra e balanceada!")
+            print("\n[RESULTADO] Cadeia ACEITA: sintaxe íntegra e balanceada")
             return True
         else:
-            print("\n[RESULTADO] Cadeia REJEITADA: Pilha não vazia ou término prematuro.")
+            print("\n[RESULTADO] Cadeia REJEITADA: pilha não vazia ou término prematuro")
             return False
 
 #Execução
 if __name__ == "__main__":
     pda = AutomatoDePilha()
-    pda.processar("BEGIN([()])END") #Aceita
+    pda.processar("RAIOS([()])END") #Aceita
     
     print("\n" + "="*40)
     pda2 = AutomatoDePilha()
-    pda2.processar("BEGIN([)]END")   #Rejeita
+    pda2.processar("RAIOS([)]END")   #Rejeita
