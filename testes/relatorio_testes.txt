@@ -1,0 +1,74 @@
+================================================================================
+RELATÓRIO DE TESTES E RASTREAMENTO DE EXECUÇÃO
+================================================================================
+
+Este arquivo contém os cenários de testes obrigatórios para auditoria das 
+implementações, cobrindo casos de sucesso, rejeição e fronteira.
+
+--------------------------------------------------------------------------------
+1. MÁQUINA DE TURING COM MÚLTIPLAS FITAS (SINCRONIZADOR DE DADOS)
+--------------------------------------------------------------------------------
+
+[TESTE 1] CASO PADRÃO (SUCESSO)
+- Entradas: Fita 1 = "HD1010FN" | Fita 2 = "HD1010FN"
+- Rastreamento Simplificado:
+  * [q0 -> q1 -> q2] Lê e valida o cabeçalho inicial 'HD' em ambas as fitas.
+  * [q2] Identifica os blocos de dados. Como os bits coincidem, desvia...
+  * [q4] Grava o bit '1' na Fita 3 e avança as cabeças.
+  * [q3] Grava o bit '0' na Fita 3 e avança as cabeças.
+  * [q2 -> q5 -> q6] Detecta o fim dos dados e valida o rodapé 'FN'.
+  * [q_accept] Grava o caractere 'V' (Válido) na Fita 3.
+- Resultado: CADEIA ACEITA (Fita 3 final: "__1010_V")
+
+[TESTE 2] DIVERGÊNCIA DE DADOS (REJEIÇÃO)
+- Entradas: Fita 1 = "HD1010FN" | Fita 2 = "HD1011FN"
+- Rastreamento Simplificado:
+  * [q0 -> q1 -> q2] Valida o cabeçalho 'HD' com sucesso.
+  * [q2] Copia os primeiros três bits ("101") normalmente.
+  * [q2] Na 4ª posição, a Fita 1 tem '0' e a Fita 2 tem '1'.
+  * [q_reject] O sistema detecta a quebra de sincronia e aborta.
+- Resultado: CADEIA REJEITADA
+
+[TESTE 3] ERRO DE CABEÇALHO (FRONTEIRA / REJEIÇÃO)
+- Entradas: Fita 1 = "XD1010FN" | Fita 2 = "XD1010FN"
+- Rastreamento Simplificado:
+  * [q0] A máquina tenta ler o primeiro caractere esperando 'H'.
+  * [q_reject] Como encontrou 'X', a transição não existe e o programa para.
+- Resultado: CADEIA REJEITADA (Abortado no início)
+
+--------------------------------------------------------------------------------
+2. AUTÔMATO DE PILHA (VALIDADOR SINTÁTICO 'RAIOS')
+--------------------------------------------------------------------------------
+
+[TESTE 1] CASO PADRÃO (SUCESSO)
+- Entrada: "RAIOS([()])END"
+- Rastreamento Simplificado:
+  * [q0 -> q5] Consome sequencialmente as letras R-A-I-O-S (Prefixo obrigatório).
+  * [q5] Lê '(', empilha 'X' | Pilha: [$X]
+  * [q5] Lê '[', empilha 'Y' | Pilha: [$XY]
+  * [q5] Lê ']', desempilha 'Y' (casamento perfeito) | Pilha: [$X]
+  * [q5] Lê ')', desempilha 'X' (casamento perfeito) | Pilha: [$]
+  * [q5] Encontra a letra 'E', muda para a validação do sufixo.
+  * [q6 -> q7 -> q8] Consome sequencialmente as letras N-D.
+  * [q_accept] Estado final q8 atingido e a pilha voltou ao estado inicial [$].
+- Resultado: CADEIA ACEITA
+
+[TESTE 2] ERRO DE SINTAXE / ESCOPO ABERTO (REJEIÇÃO)
+- Entrada: "RAIOS([)END"
+- Rastreamento Simplificado:
+  * [q0 -> q5] Valida o prefixo 'RAIOS' com sucesso.
+  * [q5] Lê '(', empilha 'X' | Pilha: [$X]
+  * [q5] Lê '[', empilha 'Y' | Pilha: [$XY]
+  * [q5] Lê ')', mas o topo da pilha é 'Y' (esperava-se fechar o colchete primeiro).
+  * [q_reject] Desbalanceamento detectado. O autômato trava.
+- Resultado: CADEIA REJEITADA
+
+[TESTE 3] MIOLO VAZIO (FRONTEIRA / SUCESSO)
+- Entrada: "RAIOSEND"
+- Rastreamento Simplificado:
+  * [q0 -> q5] Valida o prefixo 'RAIOS' normalmente.
+  * [q5] O próximo caractere já é o 'E' do sufixo.
+  * [q5 -> q6] Como a pilha só contém [$], o autômato aceita a transição direta.
+  * [q6 -> q7 -> q8] Valida o restante do sufixo (N-D).
+- Resultado: CADEIA ACEITA (Bloco sem delimitadores internos é válido)
+================================================================================

@@ -43,8 +43,8 @@ $ python implementacoes/pda_validador.py
 
 ## Referencias Bibliograficas
 
-- DIVERIO, Tiaraju Asmuz; MENEZES, Paulo Blauth. Teoria da Computacao: Maquinas Universais e Computabilidade. 3. ed. Porto Alegre: Bookman, 2011. [cite: 125]
+- DIVERIO, Tiaraju Asmuz; MENEZES, Paulo Blauth. Teoria da Computacao: Maquinas Universais e Computabilidade. 3. ed. Porto Alegre: Bookman, 2011.
 
-- MENEZES, Paulo Blauth. Linguagens Formais e Automatos. 6. ed. Porto Alegre: Bookman, 2011. [cite: 126]
+- MENEZES, Paulo Blauth. Linguagens Formais e Automatos. 6. ed. Porto Alegre: Bookman, 2011.
 
-- Slides da disciplina sobre Maquina de Turing, maquinas universais, modificacoes da Maquina de Turing, Maquina de Post, solucionabilidade e lambda-Calculo. [cite: 127]
+- Slides da disciplina sobre Maquina de Turing, maquinas universais, modificacoes da Maquina de Turing, Maquina de Post, solucionabilidade e lambda-Calculo.
