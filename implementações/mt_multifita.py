@@ -79,7 +79,7 @@ class MTMulfitita:
         if self.estado == 'q_accept':
             print("\nACEITA --> fluxos sincronizados e transferidos")
         else:
-            print("\nREJEITA --> divergência de dados ou cabeçalho incorreto")
+            print("\nREJEITA --> divergência de dados, cabeçalho incorreto ou caractere inválido")
 
 #Execução
 if __name__ == "__main__":
