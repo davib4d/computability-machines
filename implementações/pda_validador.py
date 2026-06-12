@@ -3,21 +3,21 @@ import time
 class AutomatoDePilha:
     def __init__(self):
         self.estado_atual = 'q0'
-        self.pilha = ['$']  # fundo da pilha
+        self.pilha = ['#']  # fundo da pilha
         
     def exibir_passo(self, caractere_lido, acao_pilha):
-        print(f"[{self.estado_atual}] Lendo: '{caractere_lido}' | Pilha: {''.join(self.pilha)} | Ação: {acao_pilha}")
+        print(f"[{self.estado_atual}] caractere atual: '{caractere_lido}' pilha: {''.join(self.pilha)}  ação: {acao_pilha}")
         time.sleep(0.3)
 
     def processar(self, entrada):
-        print(f"\n--- Iniciando Validação PDA ---")
-        print(f"Entrada: {entrada}\n")
+        print(f"\nvalidando a entrada: {entrada}\n")
+        print(f"passo a passo: {entrada}\n")
         
         for char in entrada:
             estado_anterior = self.estado_atual
             acao = ""
             
-            #usando a palavra RAIOS (q0 -> q1 -> q2 -> q3 -> q4 -> q5)
+            #usando a palavra RAIOS
             if self.estado_atual == 'q0' and char == 'R':
                 self.estado_atual = 'q1'; acao = "Avança"
             elif self.estado_atual == 'q1' and char == 'A':
@@ -32,23 +32,23 @@ class AutomatoDePilha:
             #(q5) empilha e desempilha
             elif self.estado_atual == 'q5':
                 if char == '(':
-                    self.pilha.append('X'); acao = "Empilha X"
+                    self.pilha.append('X'); acao = "empilha X"
                 elif char == '[':
-                    self.pilha.append('Y'); acao = "Empilha Y"
+                    self.pilha.append('Y'); acao = "empilha Y"
                 elif char == ')':
                     if self.pilha[-1] == 'X':
-                        self.pilha.pop(); acao = "Desempilha X"
+                        self.pilha.pop(); acao = "desempilha X"
                     else:
-                        self.estado_atual = 'q_reject'; acao = "Erro de Fechamento )"
+                        self.estado_atual = 'q_reject'; acao = "erro de Fechamento )"
                 elif char == ']':
                     if self.pilha[-1] == 'Y':
-                        self.pilha.pop(); acao = "Desempilha Y"
+                        self.pilha.pop(); acao = "desempilha Y"
                     else:
-                        self.estado_atual = 'q_reject'; acao = "Erro de Fechamento ]"
+                        self.estado_atual = 'q_reject'; acao = "erro de Fechamento ]"
                 elif char == 'E':
-                    self.estado_atual = 'q6'; acao = "Avança para Sufixo"
+                    self.estado_atual = 'q6'; acao = "avança para sufixo"
                 else:
-                    self.estado_atual = 'q_reject'; acao = "Caractere Inválido"
+                    self.estado_atual = 'q_reject'; acao = "caractere Inválido"
 
             # transições do 'ND' (q6 -> q7 -> q8)
             elif self.estado_atual == 'q6' and char == 'N':
@@ -58,21 +58,21 @@ class AutomatoDePilha:
                 
             else:
                 self.estado_atual = 'q_reject'
-                acao = "Rejeitado - Transição Inexistente"
+                acao = "REJEITA transição inexistente"
 
             self.exibir_passo(char, acao)
             
             if self.estado_atual == 'q_reject':
-                print("\n[RESULTADO] Cadeia REJEITADA: Erro de sintaxe ou desbalanceamento.")
+                print("\nREJEITA erro de sintaxe ou desbalanceamento.")
                 return False
 
         #(q8 para q_accept se a pilha estiver vazia até o fundo)
-        if self.estado_atual == 'q8' and self.pilha == ['$']:
+        if self.estado_atual == 'q8' and self.pilha == ['#']:
             self.estado_atual = 'q_accept'
-            print("\n[RESULTADO] Cadeia ACEITA: sintaxe íntegra e balanceada")
+            print("\nACEITA sintaxe íntegra e balanceada")
             return True
         else:
-            print("\n[RESULTADO] Cadeia REJEITADA: pilha não vazia ou término prematuro")
+            print("\nREJEITA pilha não vazia ou término prematuro")
             return False
 
 #Execução
