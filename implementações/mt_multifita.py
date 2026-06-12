@@ -26,7 +26,7 @@ class MTMulfitita:
         time.sleep(0.4)
 
     def processar(self):
-        print("--- Iniciando Sincronizador de Dados (3 Fitas) ---\n")
+        print("iniciando leitor de fitas:\n")
         self.imprimir_fitas()
 
         while self.estado not in ['q_accept', 'q_reject']:
@@ -77,9 +77,9 @@ class MTMulfitita:
             self.imprimir_fitas()
 
         if self.estado == 'q_accept':
-            print("\n[RESULTADO] ACEITA: fluxos sincronizados e transferidos")
+            print("\nACEITA --> fluxos sincronizados e transferidos")
         else:
-            print("\n[RESULTADO] REJEITA: divergência de dados ou cabeçalho incorreto")
+            print("\nREJEITA --> divergência de dados ou cabeçalho incorreto")
 
 #Execução
 if __name__ == "__main__":
