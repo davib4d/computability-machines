@@ -3,7 +3,7 @@ import time
 class AutomatoDePilha:
     def __init__(self):
         self.estado_atual = 'q0'
-        self.pilha = ['#']  # fundo da pilha
+        self.pilha = ['$']  # fundo da pilha
         
     def exibir_passo(self, caractere_lido, acao_pilha):
         print(f"{self.estado_atual} --> caractere atual: '{caractere_lido}' pilha: {''.join(self.pilha)}  ação: {acao_pilha}")
@@ -67,7 +67,7 @@ class AutomatoDePilha:
                 return False
 
         #(q8 para q_accept se a pilha estiver vazia até o fundo)
-        if self.estado_atual == 'q8' and self.pilha == ['#']:
+        if self.estado_atual == 'q8' and self.pilha == ['$']:
             self.estado_atual = 'q_accept'
             print("\nACEITA --> sintaxe íntegra e balanceada")
             return True
